@@ -1,0 +1,15 @@
+#ResponsiveNav {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  right: 0;
+  top: 0;
+  padding-top: 4rem;
+  gap: 1.4rem;
+  background: #fcfcfc;
+  height: 100vh;
+  width: 70vw;
+  z-index: -1;
+  box-shadow: 0 5px 34px 20px #00000017;
+}
