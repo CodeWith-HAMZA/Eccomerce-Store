@@ -16,6 +16,8 @@ const State = ({ children }) => {
   const [User, setUser] = useState(null);
   const [Categories, setCategories] = useState([]);
   let [isOpen, setIsOpen] = useState(false);
+  const [ProfileData, setProfileData] = useState({});
+
   // * Update Or Set LC (Local-Storage)
   function setInLC(LCname, data) {
     localStorage.setItem(LCname, JSON.stringify(data));
@@ -112,6 +114,8 @@ const State = ({ children }) => {
         setCategories,
         isOpen,
         setIsOpen,
+        ProfileData,
+        setProfileData,
       }}
     >
       {{ ...children }}

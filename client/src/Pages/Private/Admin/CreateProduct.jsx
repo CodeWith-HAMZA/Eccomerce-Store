@@ -10,6 +10,7 @@ import {
   uploadFileToCloud,
 } from "../../../firebase/firebaseMethods";
 import Context from "../../../Context/Context";
+import { Link } from "react-router-dom";
 
 const CreateProduct = () => {
   const { progress, setProgress } = useContext(Context);
@@ -133,6 +134,7 @@ const CreateProduct = () => {
   return (
     <section className=" py-32 px-4">
       <form onSubmit={handleSubmit} className="max-w-3xl mx-auto ">
+        <h1 className="text-3xl mb-3  ">Create Your Product: </h1>
         <div className="mb-4">
           <label
             htmlFor="product-name"
@@ -269,10 +271,16 @@ const CreateProduct = () => {
         </div>
         <button
           type="submit"
-          className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          className="mr-2 bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
         >
-          Create Product
+          Create Product +
         </button>
+        <Link
+          to={"/admin/products"}
+          className="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2.5 px-4 rounded focus:outline-none focus:shadow-outline"
+        >
+          See All Products
+        </Link>
       </form>
     </section>
   );

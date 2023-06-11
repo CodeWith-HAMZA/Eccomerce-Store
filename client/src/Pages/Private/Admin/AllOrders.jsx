@@ -10,6 +10,7 @@ import {
   getMultipleDocs,
 } from "../../../firebase/firebaseMethods";
 import { useQueries, useQuery } from "@tanstack/react-query";
+import convertMiliSecondsToDate from "../../../Utilities/convertMiliSecondsToDate";
 const AllOrders = () => {
   const { User, setProgress } = React.useContext(Context);
   // const [OrderStatuses, setOrderStatuses] = React.useState();
@@ -22,7 +23,7 @@ const AllOrders = () => {
   const [Orders, setOrders] = React.useState([]);
   const nav = useNavigate();
   const [IsDisableOptions, setIsDisableOptions] = React.useState(false);
-  const [SelectedStatus, setSelectedStatus] = React.useState(`Placed`);
+  const [SelectedStatus, setSelectedStatus] = React.useState("");
 
   /**
    * This function navigates to the order details page with the order ID and state as parameters.
@@ -41,9 +42,9 @@ const AllOrders = () => {
       const allOrders = await getMultipleDocs("orders");
       setOrders([...allOrders]);
       setProgress(100);
+      console.log(allOrders, "hu");
     })();
   }, [SelectedStatus]);
-  // write custome react hook for fetching data
 
   Orders.sort(function (a, b) {
     // * Empty String Of {{Filter}}-State Means "descending-order" & By Default It's Descending
@@ -61,21 +62,25 @@ const AllOrders = () => {
   });
 
   const handleOrderStatus = async (e, order, idx) => {
-    console.log("hamza");
-    console.log("osetuhaoesnuthaoesnuthoaesnuthoenuthoenutaheunth");
-    const selectedStatus = e.target.value;
-    setSelectedStatus(selectedStatus);
-    const orders = Orders; 
-    setOrders(() => [...Orders]);
+    console.log(e.target.value, "Chalgayas");
+    const changedOrderState = e.target.value;
+    setSelectedStatus(changedOrderState);
+    const orders = Orders;
+    setOrders(() => [...orders]);
 
-    await findByIdAndUpdateDoc("orders", order.id, {
-      status: [...Orders[idx]["status"], selectedStatus],
+    // * Updating the Current Order
+    console.log(order?.id, "u");
+    await findByIdAndUpdateDoc("orders", order?.id, {
+      status: [
+        ...Orders[idx]["status"],
+        { state: changedOrderState, atTime: Date.now() },
+      ],
     });
     console.log("updated success");
 
     showToast(
       "success",
-      `Updated The Order Status To "${selectedStatus}" Successfully`
+      `Updated The Order Status To "${changedOrderState}" Successfully`
     );
   };
 
@@ -176,32 +181,39 @@ const AllOrders = () => {
                     {order["email"]}
                   </td>
                   <td class="whitespace-nowrap px-4 py-2 text-gray-700">
-                    {new Date(Date(order["timestamp"])).toLocaleDateString()}
+                    {convertMiliSecondsToDate(order["status"].at(-1)["atTime"])}
                   </td>
                   <td class="whitespace-nowrap px-4 py-2 text-gray-700 ">
-                    <select
-                      // value={order?.}
-
-                      // onChange={(e) => handleOrderStatus(e, order, idx)}
-                      onChange={(e) => {
-                        handleOrderStatus(e, order, idx);
-                        console.log("CLICKSLETUH", e, order, idx);
-                      }}
-                      value={order["status"][order["status"].length - 1]}
-                    >
-                      {_Statuses.map((status) => {
-                        return (
-                          <option
-                            disabled={order?.["status"].includes(status)}
-                            // onClick={(e) => handleOrderStatus(e, order, idx)}
-                            // onClick={() => console.log("CLICKSLETUH")}
-                            // onSelect={() => console.log("CLICKSLETUHeueuu")}
-                          >
-                            {status}
-                          </option>
-                        );
-                      })}
-                    </select>
+                    {order?.status.at(-1)["state"] === "Failed" ? (
+                      <>Failed</>
+                    ) : order?.status.at(-1)["state"] === "Delivered" ? (
+                      <>Delivered</>
+                    ) : (
+                      <select
+                        onChange={(e) => {
+                          handleOrderStatus(e, order, idx);
+                          console.log(e.target.value + " Coders");
+                        }}
+                        value={
+                          SelectedStatus.length === 0
+                            ? order?.status.at(-1)["state"]
+                            : SelectedStatus
+                        }
+                      >
+                        {_Statuses.map((status) => {
+                          return (
+                            <option
+                              disabled={order?.["status"]
+                                .map((_) => _["state"])
+                                .includes(status)}
+                              value={status}
+                            >
+                              {status}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    )}
                   </td>
 
                   <td class="whitespace-nowrap px-4 py-2 text-gray-700">

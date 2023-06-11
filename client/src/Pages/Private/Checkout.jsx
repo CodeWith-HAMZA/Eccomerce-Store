@@ -21,7 +21,10 @@ const Checkout = () => {
     isOpen,
     setIsOpen,
   } = useContext(Context);
-  const [CheckOutForm, setCheckOutForm] = React.useState({});
+  const [CheckOutForm, setCheckOutForm] = React.useState({
+    firstName: User?.displayName,
+    email: User?.email,
+  });
   const nav = useNavigate();
 
   React.useEffect(() => {
@@ -32,31 +35,29 @@ const Checkout = () => {
   }, []);
 
   const instantiateOrder = async (order) => {
-    try{
-
+    try {
       setProgress(10);
-      
+
       // * Posting Order Into The DB(FireStore)
       const docId = await addSingleDocument(order, "orders");
+      console.log(docId);
       setProgress(100);
-      
+
       nav(`/orders/${docId}`, {
         state: { order },
       });
-      
+
       showToast(
         "success",
         "Initiated Your Order Successfully, Have Some Patience!"
-        );
-        
-      }catch(err){
-    
-      }
-      };
-      const handleSubmit = async (e) => {
-        e.preventDefault();
-        
-    
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     setIsOpen(true);
     console.log(CheckOutForm, "ccc");
   };
@@ -66,7 +67,7 @@ const Checkout = () => {
       ...CheckOutForm,
       [e.target.name]: e.target.value,
     });
-  }; 
+  };
   return (
     <section className="text-gray-600 body-font relative h-screen pt-14">
       <Modal
@@ -74,12 +75,12 @@ const Checkout = () => {
         paragraph="Please review your order details carefully before confirming."
       >
         {" "}
-        <div className="mt-4">
+        <div className="mt-4 ">
           <button
             type="button"
-            className="inline-flex justify-center rounded-md border border-transparent bg-gray-100 px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2"
+            className="inline-flex justify-center rounded-md border border-transparent bg-gray-100 px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2 mr-2"
             onClick={() => {
-              setProgress(0)
+              setProgress(0);
               setIsOpen(false);
             }}
           >
@@ -87,17 +88,17 @@ const Checkout = () => {
           </button>
           <button
             type="button"
-            className="inline-flex justify-center rounded-md border border-transparent bg-gray-100 px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2"
+            className="transition-all inline-flex justify-center rounded-md border bg-yellow-600  border-transparent px-4 py-2 text-sm font-medium text-gray-100 hover:bg-yellow-700 hover:shadow-md active:outline focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2"
             onClick={() => {
               setIsOpen(false);
               const order = {
                 ...CheckOutForm,
                 orderItems: Cart,
-                status: ["Placed"],
+                status: [{ state: "Placed", atTime: Date.now() }],
                 netAmount: calculateTotalAmountOfProducts(Cart),
               };
               instantiateOrder(order);
-              console.log("Order Posted")
+              console.log("Order Posted");
             }}
           >
             Confirm
@@ -188,12 +189,12 @@ const Checkout = () => {
                   </label>
 
                   <input
-                    onChange={handleChange}
-                    value={CheckOutForm.firstName}
+                    title="Your First Name Remains Same"
+                    value={User.displayName}
                     name={"firstName"}
                     type="text"
                     id="FirstName"
-                    class="p-2 mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm"
+                    class="p-2 mt-1 border-none outline-none w-full rounded-md border-gray-200 shadow-sm sm:text-sm"
                   />
                 </div>
 
@@ -224,12 +225,12 @@ const Checkout = () => {
                   </label>
 
                   <input
-                    onChange={handleChange}
-                    value={CheckOutForm.email}
+                    title="Your Email Remains Same"
+                    value={User.email}
                     name={"email"}
                     type="email"
                     id="Email"
-                    class="p-2 mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm"
+                    class="p-2 mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm border-none outline-none"
                   />
                 </div>
                 <div class="col-span-6">

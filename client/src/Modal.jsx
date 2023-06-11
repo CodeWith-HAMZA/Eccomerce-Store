@@ -46,7 +46,7 @@ export default function Modal({ title, paragraph, children }) {
                   <div className="mt-2">
                     <p className="text-sm text-gray-500">{paragraph}</p>
                   </div>
-    {children}
+                  {children}
                 </Dialog.Panel>
               </Transition.Child>
             </div>

@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { showToast } from "../constants/toastNotification";
+import { getMultipleDocs } from "../firebase/firebaseMethods";
+import Context from "../Context/Context";
 
 const Dropdown2 = ({
   dropdownName,
@@ -9,12 +11,30 @@ const Dropdown2 = ({
   forAccount,
   SignOutHandler,
 }) => {
-  const [IsOpenedDropdown, SetIsOpenedDropdown] = useState(false);
+  const { setProfileData, User } = useContext(Context);
+  const [IsOpenedDropdown, setIsOpenedDropdown] = useState(false);
+  useEffect(() => {
+    (async () => {
+      const docs = await getMultipleDocs("users");
+      for (let doc of docs) {
+        if (doc.uid === User.uid) {
+          setProfileData({
+            name: doc.name,
+            email: doc.email,
+            location: doc.location,
+            role: doc.admin,
+          });
+          console.log(doc);
+        }
+      }
+    })();
+  }, []);
+
   return (
     <div class="  inline-block relative">
       <button
         class="  hover:text-gray-800 text-gray-500 font-normal rounded inline-flex items-center transition-all"
-        onClick={() => SetIsOpenedDropdown(!IsOpenedDropdown)}
+        onClick={() => setIsOpenedDropdown(!IsOpenedDropdown)}
       >
         <span class="mr-1">{dropdownName ? dropdownName : ""}</span>
         {logo}
@@ -30,9 +50,9 @@ const Dropdown2 = ({
               onClick={() => {
                 if (name === "Logout") {
                   SignOutHandler();
-                  showToast("success", "Successfully Signout")
+                  showToast("success", "Successfully Signout");
                 }
-                SetIsOpenedDropdown(false);
+                setIsOpenedDropdown(false);
               }}
             >
               <Link

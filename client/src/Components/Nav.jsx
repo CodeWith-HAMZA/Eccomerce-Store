@@ -1,6 +1,6 @@
 import { async } from "@firebase/util";
 import { getMultiFactorResolver, signOut } from "firebase/auth";
-import React from "react";
+import React, { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { decreaseQty, increaseQty, removeItemFromCart } from "../App/cartSlice";
@@ -23,13 +23,13 @@ const Nav = () => {
     setInLC,
     User,
     setUser,
-    setProducts,
-    Products,
     Categories,
     setCategories,
+    ProfileData,
+    setProfileData,
   } = React.useContext(Context);
 
-  const [SubTotal, setSubTotal] = React.useState();
+  // const [SubTotal, setSubTotal] = React.useState();
   const nav = useNavigate();
 
   const CloseCart = () => {
@@ -38,10 +38,11 @@ const Nav = () => {
   const OpenCart = () => {
     setIsCartOpened(true);
   };
-  React.useEffect(() => {
+  const subTotal = React.useMemo(() => {
     const subTotal = calculateTotalAmountOfProducts(Cart);
-    console.log(subTotal, cart);
-    setSubTotal(subTotal);
+    // console.log(subTotal, cart);
+
+    return subTotal;
   }, [IsCartOpened, Cart]);
 
   React.useEffect(() => {
@@ -211,6 +212,15 @@ const Nav = () => {
                       </svg>
                     }
                     list={[
+                      (() => {
+                        console.log(ProfileData, "");
+                        return ProfileData?.role;
+                      })()
+                        ? {
+                            name: "Dashboard",
+                            url: "/admin/dashboard",
+                          }
+                        : {},
                       { name: "Your Profile", url: "/profile" },
                       { name: "Your Orders", url: "/orders" },
                       { name: "Logout", url: "/" },
@@ -388,7 +398,7 @@ const Nav = () => {
                     <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
                       <div className="flex justify-between text-base font-medium text-gray-900">
                         <p>Subtotal</p>
-                        <p>Rs: {SubTotal}</p>
+                        <p>Rs: {subTotal}</p>
                       </div>
                       <p className="mt-0.5 text-sm text-gray-500">
                         Shipping and taxes calculated at checkout.

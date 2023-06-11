@@ -9,37 +9,32 @@ import {
   getMultipleDocs,
 } from "../../firebase/firebaseMethods";
 const UserProfile = () => {
-  const { User } = useContext(Context);
-
-  const [FormData, setFormData] = useState({
-    name: User.displayName,
-    email: User.email,
-    location: "Hyderabad",
-  });
+  const { User, setUser, ProfileData, setProfileData } = useContext(Context);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
+    setProfileData((prevProfileData) => ({
+      ...prevProfileData,
       [name]: value,
     }));
   };
 
-  useEffect(() => {
-    (async () => {
-      const docs = await getMultipleDocs("users");
-      for (let doc of docs) {
-        if (doc.uid === User.uid) {
-          setFormData({
-            name: doc.name,
-            email: doc.email,
-            location: doc.location,
-          });
-        }
-      }
-    })();
-    // findByIdAndUpdateDoc("users", "4MyKAUzkmeoAHXRFrwDj", {adminu: true})
-  }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     const docs = await getMultipleDocs("users");
+  //     for (let doc of docs) {
+  //       if (doc.uid === User.uid) {
+  //         setProfileData({
+  //           name: doc.name,
+  //           email: doc.email,
+  //           location: doc.location,
+  //           role: doc.admin,
+  //         });
+  //       }
+  //     }
+  //   })();
+  //   // findByIdAndUpdateDoc("users", "4MyKAUzkmeoAHXRFrwDj", {adminu: true})
+  // }, []);
   React.useEffect(() => {
     scrollTo(0, 0);
   }, []);
@@ -59,13 +54,18 @@ const UserProfile = () => {
                 </div>
                 <div class="mt-4 sm:mt-0">
                   <h1 class="text-3xl font-bold text-gray-900">
-                    {FormData.name}
+                    {ProfileData.name}
                   </h1>
                   <p class="text-sm font-medium text-gray-500">
-                    {FormData.email}
+                    {ProfileData.email}
+                    {ProfileData?.role && (
+                      <span className="bg-gray-200 border-2 border-gray-300 m-1 px-1 py-0.5 rounded-md">
+                        Admin (Special User)
+                      </span>
+                    )}
                   </p>
                   <p class="text-sm font-medium text-gray-500">
-                    {FormData.location}, Pakistan
+                    {ProfileData.location}, Pakistan
                   </p>
                 </div>
               </div>
@@ -75,7 +75,7 @@ const UserProfile = () => {
                     findByFieldAndUpdateDoc(
                       "users",
                       { uid: User.uid },
-                      { ...FormData }
+                      { ...ProfileData }
                     );
                     await showToast("success", "Successfully Saved Changes");
                   }}
@@ -107,14 +107,14 @@ const UserProfile = () => {
                     type="text"
                     name="name"
                     placeholder="Enter Your Name"
-                    value={FormData.name}
+                    value={ProfileData.name}
                   />
                 </dd>
               </div>
               <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                 <dt class="text-sm font-medium text-gray-500">Email address</dt>
                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                  <span>{FormData.email}</span>
+                  <span>{ProfileData.email}</span>
                 </dd>
               </div>
               <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -122,7 +122,7 @@ const UserProfile = () => {
                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                   <select
                     name="location"
-                    value={FormData.location}
+                    value={ProfileData.location}
                     onChange={handleChange}
                   >
                     {/* <option value="">--Please select an option--</option> */}

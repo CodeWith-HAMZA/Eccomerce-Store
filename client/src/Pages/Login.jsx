@@ -11,36 +11,25 @@ import {
   getMultipleDocs,
 } from "../firebase/firebaseMethods";
 
-const Login = ({   }) => {
+const Login = ({}) => {
   const nav = useNavigate();
   const email = useRef(),
     password = useRef();
-  const {} = useContext(Context);
+  const { User } = useContext(Context);
 
   // * If User Has Token Then Don't Give Access To This Route For The User
   useEffect(() => {
-    // if (User.token) {
-    //   router.push("/"); // * Throwing The User To '/' Each-Time Whenever He Tries To Go '/login'
-    // }
-   
+    if (User) {
+      nav("/"); // * Throwing The User To '/' Each-Time Whenever He Tries To Go '/login'
+    }
   });
 
   const Submit = async (e) => {
     e.preventDefault();
 
     try {
-      //   // * Axios-POST-Request -login-api
-      //   const { data } = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/login`, {
-      //     email: email.current.value,
-      //     password: password.current.value,
-      //   });
-
       localStorage.setItem("token", data.token);
-    } catch ({ response: { data } }) {
-      //   setServerResponse(data);  // * Holding The Response-Object From The "Server"
-      //   showAlert("Error");
-      //   console.log(data);
-    }
+    } catch ({ response: { data } }) {}
   };
 
   const signInHandler = async () => {
@@ -95,7 +84,12 @@ const Login = ({   }) => {
               src="https://tailwindui.com/img/logos/mark.svg?color=red&shade=600"
               alt="Your Company"
             /> */}
-            <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
+            <h2
+              onClick={() => {
+                console.log(User);
+              }}
+              className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900"
+            >
               Sign in to your account
             </h2>
             <p className="mt-2 text-center text-sm text-gray-600">

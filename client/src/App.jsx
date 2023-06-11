@@ -58,8 +58,10 @@ import OrderDetails from "./Pages/Private/OrderDetails";
 import Forbidden from "./Pages/Error/Forbidden";
 import ReactQuery from "./ReactQuery";
 import { getLocalStorage } from "./Utilities/LocalStorage";
+import UpdateProduct from "./Pages/Private/Admin/UpdateProduct";
 function App() {
-  const { progress, setProgress, setCart, setUser, User } = useContext(Context);
+  const { progress, setProgress, setCart, setUser, User, setProfileData } =
+    useContext(Context);
 
   // const cart = useSelector((state) => state.cart);
   // const dispatch = useDispatch();
@@ -74,6 +76,8 @@ function App() {
       // * Setting state with user's  Account Related-Data
       // console.log(userData);
       setUser(userData);
+      console.log(userData);
+      console.log();
     });
 
     return () => {
@@ -93,7 +97,7 @@ function App() {
       return AdminProtectedComponent;
     }
 
-    return <Navigate to={"admin/login"} />;
+    return <Navigate to={"/login"} />;
   };
 
   return (
@@ -178,6 +182,11 @@ function App() {
           key={"keey2e"}
           path="/admin/products/new"
           element={AdminProtectedRoute(<CreateProduct />)}
+        />
+        <Route
+          key={"keey2e"}
+          path="/admin/products/:id"
+          element={AdminProtectedRoute(<UpdateProduct />)}
         />
         <Route
           key={"keey2e"}

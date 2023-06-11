@@ -24,11 +24,9 @@ export const addSingleDocument = async (givenDoc, givenCollection) => {
   } catch (error) {
     console.log("Error While Adding User To Collection", error);
   }
- 
 };
 
 export const getSingleDocumentById = async (givenCollection, givenDocId) => {
-  
   const docRef = doc(db, givenCollection, givenDocId);
   const document = await getDoc(docRef);
 
@@ -73,6 +71,13 @@ export const findByFieldAndUpdateDoc = async (
   givenDocField,
   DocumentFieldsObj
 ) => {
+  // const FIELD_TUPLE = {};
+  const { email, uid } = DocumentFieldsObj || {}; // Destructure the object with default empty object
+
+  // If email or uid is missing, return
+  if (!email || !uid) {
+    return;
+  }
   const docs = await getMultipleDocs(givenCollection);
   console.log(docs);
   for (const doc of docs) {

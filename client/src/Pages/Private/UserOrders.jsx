@@ -42,12 +42,11 @@ const UserOrders = () => {
           (order) => String(order?.email) === String(User?.email)
         )
       );
+      console.log(userOrders);
     })();
   }, []);
 
   Orders.sort(function (a, b) {
-    // Turn your strings into dates, and then subtract them
-    // to get a value that is either negative, positive, or zero.
     // * Empty String Of {{Filter}}-State Means "descending-order" & By Default It's Descending
     if (FilterByDate === "asc") {
       // * Ascending Order
@@ -64,6 +63,23 @@ const UserOrders = () => {
   React.useEffect(() => {
     scrollTo(0, 0);
   }, []);
+  function formatMilliseconds(milliseconds) {
+    var hours = Math.floor(milliseconds / 3600000);
+    var minutes = Math.floor((milliseconds % 3600000) / 60000);
+    var seconds = Math.floor((milliseconds % 60000) / 1000);
+    var remainingMilliseconds = milliseconds % 1000;
+
+    return (
+      hours.toString().padStart(2, "0") +
+      ":" +
+      minutes.toString().padStart(2, "0") +
+      ":" +
+      seconds.toString().padStart(2, "0") +
+      "." +
+      remainingMilliseconds.toString().padStart(3, "0")
+    );
+  }
+
   return (
     <section class=" overflow-x-auto pt-[10rem] min-h-screen">
       <div className="mx-auto max-w-[80rem] p-2 ">
@@ -160,13 +176,13 @@ const UserOrders = () => {
                     {order["email"]}
                   </td>
                   <td class="whitespace-nowrap px-4 py-2 text-gray-700">
-                    {new Date(Date(order["timestamp"])).toLocaleDateString()}
+                    {new Date(
+                      order["status"].at(-1)["atTime"]
+                    ).toLocaleString()}
                   </td>
                   <td class="whitespace-nowrap px-4 py-2 text-gray-700 ">
-                    <span
-                      className={`${OrderStatuses?.[status]} px-2 py-1 rounded-md`}
-                    >
-                      {order["status"].at(-1)}
+                    <span className={``}>
+                      {order["status"].at(-1)["state"]}
                     </span>
                   </td>
 
