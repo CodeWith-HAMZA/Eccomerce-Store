@@ -279,7 +279,7 @@ const CreateProduct = () => {
           to={"/admin/products"}
           className="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2.5 px-4 rounded focus:outline-none focus:shadow-outline"
         >
-          See All Products
+          See Your Products
         </Link>
       </form>
     </section>

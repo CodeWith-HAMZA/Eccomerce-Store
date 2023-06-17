@@ -52,7 +52,7 @@ const AllProducts = () => {
                     to={`/admin/products/${product.id}`}
                     class="text-xs font-bold px-4 py-2 rounded-full   hover:bg-gray-300  bg-gray-200 "
                   >
-                    Edit
+                    EDIT
                   </Link>
 
                   <button
