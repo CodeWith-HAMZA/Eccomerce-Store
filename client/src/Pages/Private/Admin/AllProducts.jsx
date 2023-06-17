@@ -32,7 +32,9 @@ const AllProducts = () => {
                 />
 
                 <div class="p-4">
-                  <h2 class="font-bold text-xl mb-2">{product.name}</h2>
+                  <h2 class="font-bold text-xl mb-2 break-words">
+                    {product.name}
+                  </h2>
                   <span className="text-xs text-gray-500">#{product.id}</span>
                   <p className="mb-3">
                     Category: <span>{product.category}</span>
@@ -45,13 +47,14 @@ const AllProducts = () => {
                   </p>
                   <p class="text-gray-600">{product.description}</p>
                 </div>
-                <div class="flex items-center justify-between px-4 py-2 ">
+                <div class="flex items-center justify-start gap-1 px-4 py-2 ">
                   <Link
                     to={`/admin/products/${product.id}`}
-                    class=" font-bold px-3 rounded-full py-1.5 hover:bg-gray-200 "
+                    class="text-xs font-bold px-4 py-2 rounded-full   hover:bg-gray-300  bg-gray-200 "
                   >
                     Edit
                   </Link>
+
                   <button
                     onClick={async () => {
                       try {
@@ -60,11 +63,22 @@ const AllProducts = () => {
                           "success",
                           `Successfully Deleted The Product #${product?.id}`
                         );
-                      } catch (error) {}
+                      } catch (error) {
+                        console.error("Error Occured ", error);
+                      }
                     }}
-                    class="bg-white text-gray-900 font-bold py-2 px-4 rounded-full hover:bg-gray-200"
+                    class="bg-red-700 text-xs text-gray-200 font-bold py-2 px-4 rounded-full hover:bg-red-900"
                   >
                     Delete
+                  </button>
+                  <button
+                    className={`text-xs rounded-full px-2 py-2 font-bold  ${
+                      true
+                        ? "bg-gray-700 text-gray-200"
+                        : "bg-gray-200 text-gray-700"
+                    }`}
+                  >
+                    Featured
                   </button>
                 </div>
               </div>
