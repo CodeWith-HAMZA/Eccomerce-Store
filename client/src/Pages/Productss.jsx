@@ -7,12 +7,15 @@ const Productss = ({ products, productType }) => {
   const { Categories, setCategories } = React.useContext(Context);
   const [IsFiltersShown, setIsFiltersShown] = React.useState(false);
   return (
-    <section class="bg-white dark:bg-gray-50 pt-32 px-12">
+    <section class="bg-white dark:bg-gray-50 pt-32 px-12 min-h-[100vh]">
       <button
         onClick={() => setIsFiltersShown(!IsFiltersShown)}
-        className="h-10 px-5 text-indigo-100 transition-colors duration-150 bg-yellow-700 rounded-lg hover:bg-yellow-800  text-lg"
+        className="rounded-lg hover:bg-gray-300 transition-all px-3 py-2 bg-gray-200"
       >
-        {IsFiltersShown ? "Show" : "Hide"} Filters
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+  <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" />
+</svg>
+
       </button>
       <div class="container mx-auto mt-10">
         <div class="lg:flex lg:-mx-2">
@@ -33,7 +36,7 @@ const Productss = ({ products, productType }) => {
 
           <div class="mt-6 lg:mt-0 lg:px-2 lg:w-4/5 ">
             <div class="flex items-center justify-between text-sm tracking-widest uppercase ">
-              <p class="text-gray-500 ">{products.length} Items</p>
+              <p class="text-gray-500 ">Items: {products.length}  </p>
               <div class="flex items-center">
                 <p class="text-gray-500 ">Sort By:{" "}</p>
                 <select class="font-medium text-gray-700 bg-transparent dark:text-gray-500 focus:outline-none">
@@ -43,10 +46,8 @@ const Productss = ({ products, productType }) => {
                 </select>
               </div>
             </div>
-            <div
-              class="grid grid-cols-1 lg:w-[52rem] xl:w-[70rem] gap-32 md:gap-0 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 
-                   "
-            >
+            <div class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4    xl:gap-x-8">
+
               {products.map((product) => (
                 <ProductCard
                   name={product?.name}

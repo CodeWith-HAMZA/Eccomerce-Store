@@ -2,7 +2,7 @@ import { collectionGroup } from "firebase/firestore";
 import React, { useState } from "react";
 import { _Statuses } from "../constants/orderStatuses";
 import convertMiliSecondsToDate from "../Utilities/convertMiliSecondsToDate";
-
+const paymentMethod = "COD"
 const MinusMark = () => {
   return (
     <svg
@@ -117,7 +117,7 @@ const Order = ({ order, orderId }) => {
                     Payment Method
                   </dt>
                   <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                    {order.paymentMethod} COD
+                  {paymentMethod}
                   </dd>
                 </div>
                 <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -243,7 +243,7 @@ const Order = ({ order, orderId }) => {
                         Payment method
                       </dt>
                       <dd class="mt-1 text-sm text-gray-900">
-                        {order.paymentMethod}
+                        {paymentMethod}
                       </dd>
                     </div>
                     <div class="sm:col-span-1">
@@ -258,7 +258,7 @@ const Order = ({ order, orderId }) => {
                       <dt class="text-sm font-medium text-gray-500">
                         Shipping method
                       </dt>
-                      <dd class="mt-1 text-sm text-gray-900">Standard</dd>
+                      <dd class="mt-1 text-sm text-gray-900">--</dd>
                     </div>
                   </dl>
                 </div>
