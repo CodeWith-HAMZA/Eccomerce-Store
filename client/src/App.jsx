@@ -52,13 +52,13 @@ import AdminSideNav from "./Pages/Private/Admin/AdminSideNav";
 import DashboardHome from "./Pages/Private/Admin/DashboardHome";
 import AllOrders from "./Pages/Private/Admin/AllOrders";
 import Modal from "./Modal";
-import Productss from "./Pages/Productss";
 import About from "./Pages/About";
 import OrderDetails from "./Pages/Private/OrderDetails";
 import Forbidden from "./Pages/Error/Forbidden";
 import ReactQuery from "./ReactQuery";
 import { getLocalStorage } from "./Utilities/LocalStorage";
 import UpdateProduct from "./Pages/Private/Admin/UpdateProduct";
+import AllUsers from "./Pages/Private/Admin/AllUsers";
 function App() {
   const { progress, setProgress, setCart, setUser, User, setProfileData } =
     useContext(Context);
@@ -122,9 +122,6 @@ function App() {
       <Nav />
       <Routes>
         <Route key={"kueee,y1"} path="/about" element={<About />} />
-        <Route key={"kuee,y1"} path="/p" element={<Productss />} />
-        <Route key={"kue,y1"} path="/try" element={<Modal />} />
-        <Route key={"ke,y1"} path="/pc" element={<ProductCard />} />
         <Route key={"key1"} path="/" element={<Home />} />
         <Route
           key={"key2"}
@@ -207,6 +204,11 @@ function App() {
           key={"ord"}
           path="/admin/orders/:orderId"
           element={AdminProtectedRoute(<OrderDetails />)}
+        />
+        <Route
+          key={"users"}
+          path="/admin/users"
+          element={AdminProtectedRoute(<AllUsers />)}
         />
         <Route key={"u"} path="/query" element={<ReactQuery />} />
       </Routes>

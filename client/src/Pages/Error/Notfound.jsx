@@ -1,9 +1,9 @@
 import React from "react";
-import ErrorPage from "./ErrorPage";
+import ErrorPageLayout from "./ErrorPageLayout";
 
 const Notfound = ({}) => {
   return (
-    <ErrorPage>
+    <ErrorPageLayout>
       <h1 class="mt-5 text-[36px] font-bold text-slate-800 lg:text-[50px]">
         404 - Page not found
       </h1>
@@ -11,7 +11,7 @@ const Notfound = ({}) => {
         The page you are looking for doesn't exist or <br />
         has been removed.
       </p>
-    </ErrorPage>
+    </ErrorPageLayout>
   );
 };
 

@@ -178,11 +178,11 @@ const CreateProduct = () => {
           </label>
           <input
             name="price"
-            type="text"
+            type="number"
             id="product-price"
             value={ProductForm.price}
             onChange={handleChange}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none border rounded w-1/6 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             placeholder="Enter product price"
           />
         </div>
@@ -195,11 +195,11 @@ const CreateProduct = () => {
           </label>
           <input
             name="stock"
-            type="text"
+            type="number"
             id="product-stock"
             value={ProductForm.stock}
             onChange={handleChange}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none border rounded w-1/6 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             placeholder="Enter product Stock"
           />
         </div>

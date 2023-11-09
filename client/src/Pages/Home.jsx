@@ -17,8 +17,7 @@ const Home = () => {
   }, []);
   return (
     <>
-      <ForeverHeroSection />
-      {/* <FancyHeroSection /> */}
+      <ForeverHeroSection />  
       <section>
         <div class="max-w-screen-xl px-4 py-8 mx-auto sm:px-6 sm:py-12 lg:px-8">
           <header class="text-center">

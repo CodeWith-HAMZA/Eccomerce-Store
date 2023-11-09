@@ -93,119 +93,138 @@ const UserOrders = () => {
             type={"text"}
           />
         </div>
-        <table class="min-w-[100%] divide-y-2 divide-gray-200 text-sm ml-[1rem]">
-          <thead>
-            <tr>
-              <th class="whitespace-nowrap px-4 py-2 text-left font-medium text-gray-900 ">
-                Order Id
-              </th>
-              <th class="whitespace-nowrap px-4 py-2 text-left font-medium text-gray-900 ">
-                Email
-              </th>
-              <th
-                onClick={() => {
-                  setFilterByPrice("");
-                  setFilterByDate(() =>
-                    FilterByDate === "asc" ? "desc" : "asc"
-                  );
-                }}
-                class="cursor-pointer whitespace-nowrap px-4 py-2 text-left font-medium text-gray-900 flex items-center gap-1"
-              >
-                <span>Order Date</span>
-
-                <svg
-                  aria-hidden="true"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4"
+        {Orders.length === 0 ? (
+          <OrdersNotFound />
+        ) : (
+          <table class="min-w-[100%] divide-y-2 divide-gray-200 text-sm ml-[1rem]">
+            <thead>
+              <tr>
+                <th class="whitespace-nowrap px-4 py-2 text-left font-medium text-gray-900 ">
+                  Order Id
+                </th>
+                <th class="whitespace-nowrap px-4 py-2 text-left font-medium text-gray-900 ">
+                  Email
+                </th>
+                <th
+                  onClick={() => {
+                    setFilterByPrice("");
+                    setFilterByDate(() =>
+                      FilterByDate === "asc" ? "desc" : "asc"
+                    );
+                  }}
+                  class="cursor-pointer whitespace-nowrap px-4 py-2 text-left font-medium text-gray-900 flex items-center gap-1"
                 >
-                  <path
-                    d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  ></path>
-                </svg>
-              </th>
-              <th class="whitespace-nowrap px-4 py-2 text-left font-medium text-gray-900">
-                Order Status
-              </th>
-              <th
-                onClick={() => {
-                  setFilterByDate("");
-                  setFilterByPrice(() =>
-                    FilterByPrice === "asc" ? "desc" : "asc"
-                  );
-                }}
-                class=" flex gap-1 cursor-pointer whitespace-nowrap px-4 py-2 text-left font-medium text-gray-900"
-              >
-                <span>Net Amount</span>
+                  <span>Order Date</span>
 
-                <svg
-                  aria-hidden="true"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4"
+                  <svg
+                    aria-hidden="true"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4"
+                  >
+                    <path
+                      d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>
+                  </svg>
+                </th>
+                <th class="whitespace-nowrap px-4 py-2 text-left font-medium text-gray-900">
+                  Order Status
+                </th>
+                <th
+                  onClick={() => {
+                    setFilterByDate("");
+                    setFilterByPrice(() =>
+                      FilterByPrice === "asc" ? "desc" : "asc"
+                    );
+                  }}
+                  class=" flex gap-1 cursor-pointer whitespace-nowrap px-4 py-2 text-left font-medium text-gray-900"
                 >
-                  <path
-                    d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  ></path>
-                </svg>
-              </th>
-              <th class="px-4 py-2"></th>
-            </tr>
-          </thead>
+                  <span>Net Amount</span>
 
-          <tbody class="divide-y divide-gray-200">
-            {Orders.filter((order) =>
-              order.id.toLowerCase().includes(Keyword.toLowerCase())
-            ).map((order) => {
-              return (
-                <tr className="hover:bg-gray-200 transition-all">
-                  <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                    #{order["id"]}
-                  </td>
-                  <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                    {order["email"]}
-                  </td>
-                  <td class="whitespace-nowrap px-4 py-2 text-gray-700">
-                    {new Date(
-                      order["status"].at(-1)["atTime"]
-                    ).toLocaleString()}
-                  </td>
-                  <td class="whitespace-nowrap px-4 py-2 text-gray-700 ">
-                    <span className={``}>
-                      {order["status"].at(-1)["state"]}
-                    </span>
-                  </td>
+                  <svg
+                    aria-hidden="true"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4"
+                  >
+                    <path
+                      d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>
+                  </svg>
+                </th>
+                <th class="px-4 py-2"></th>
+              </tr>
+            </thead>
 
-                  <td class="whitespace-nowrap px-4 py-2 text-gray-700">
-                    Rs:{order["netAmount"].toLocaleString("en-US")}
-                  </td>
-                  <td class="whitespace-nowrap px-4 py-2">
-                    <button
-                      // to={{pathname:`/orders/${order.id}`}}
-                      onClick={() => navigateToOrderDetails(order)}
-                      className="inline-block rounded bg-yellow-600 px-4 py-2 text-xs font-medium text-white hover:bg-yellow-700"
-                    >
-                      View
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+            <tbody class="divide-y divide-gray-200">
+              {Orders.filter((order) =>
+                order.id.toLowerCase().includes(Keyword.toLowerCase())
+              ).map((order) => {
+                return (
+                  <tr className="hover:bg-gray-200 transition-all">
+                    <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                      #{order["id"]}
+                    </td>
+                    <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                      {order["email"]}
+                    </td>
+                    <td class="whitespace-nowrap px-4 py-2 text-gray-700">
+                      {new Date(
+                        order["status"].at(-1)["atTime"]
+                      ).toLocaleString()}
+                    </td>
+                    <td class="whitespace-nowrap px-4 py-2 text-gray-700 ">
+                      <span className={``}>
+                        {order["status"].at(-1)["state"]}
+                      </span>
+                    </td>
+
+                    <td class="whitespace-nowrap px-4 py-2 text-gray-700">
+                      Rs:{order["netAmount"].toLocaleString("en-US")}
+                    </td>
+                    <td class="whitespace-nowrap px-4 py-2">
+                      <button
+                        // to={{pathname:`/orders/${order.id}`}}
+                        onClick={() => navigateToOrderDetails(order)}
+                        className="inline-block rounded bg-yellow-600 px-4 py-2 text-xs font-medium text-white hover:bg-yellow-700"
+                      >
+                        View
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        )}
       </div>
     </section>
   );
 };
+
+function OrdersNotFound() {
+  return (
+    <div className="text-center text-gray-600 mb-8">
+      No orders found.{" "}
+      <Link
+        to="/products/All Products"
+        className="text-yellow-600 hover:underline"
+      >
+        Shop now
+      </Link>
+      .
+    </div>
+  );
+}
 
 export default UserOrders;

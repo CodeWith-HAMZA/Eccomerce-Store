@@ -15,10 +15,12 @@ const OrderDetails = () => {
       nav("/forbidden");
     }
   }, []);
-  return (
+  return location?.state?.order ? (
     <Fragment>
       <Order orderId={orderId} order={location?.state?.order} />
     </Fragment>
+  ) : (
+    "Order Not Found (Forbidden) - 403"
   );
 };
 

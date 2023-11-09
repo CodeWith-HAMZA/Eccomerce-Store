@@ -2,56 +2,51 @@ import { collectionGroup } from "firebase/firestore";
 import React, { useState } from "react";
 import { _Statuses } from "../constants/orderStatuses";
 import convertMiliSecondsToDate from "../Utilities/convertMiliSecondsToDate";
-const paymentMethod = "COD"
-const MinusMark = () => {
-  return (
-    <svg
-      class="h-4 w-4 "
-      fill="none"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="2"
-      stroke="currentColor"
-      viewBox="0 0 24 24"
-    >
-      <path d="M20 12H4" stroke-width="3"></path>
-    </svg>
-  );
-};
+const paymentMethod = "COD";
+const MinusMark = () => (
+  <svg
+    class="h-4 w-4 "
+    fill="none"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    stroke-width="2"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+  >
+    <path d="M20 12H4" stroke-width="3"></path>
+  </svg>
+);
 
-const CheckMark = () => {
-  return (
-    <svg
-      class="h-4 w-4 "
-      fill="none"
+const CheckMark = () => (
+  <svg
+    class="h-4 w-4 "
+    fill="none"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    stroke-width="2"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+  >
+    <path d="M5 13l4 4L19 7"></path>
+  </svg>
+);
+
+const CrossMark = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke-width="1.5"
+    stroke="currentColor"
+    class="w-6 h-6"
+  >
+    <path
       stroke-linecap="round"
       stroke-linejoin="round"
-      stroke-width="2"
-      stroke="currentColor"
-      viewBox="0 0 24 24"
-    >
-      <path d="M5 13l4 4L19 7"></path>
-    </svg>
-  );
-};
-const CrossMark = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke-width="1.5"
-      stroke="currentColor"
-      class="w-6 h-6"
-    >
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        d="M6 18L18 6M6 6l12 12"
-      />
-    </svg>
-  );
-};
+      d="M6 18L18 6M6 6l12 12"
+    />
+  </svg>
+);
 
 const Order = ({ order, orderId }) => {
   let stepCompleted = true,
@@ -61,6 +56,7 @@ const Order = ({ order, orderId }) => {
   //     ? givenStatus.slice(0, givenStatus.length - 3) + "ed"
   //     : givenStatus;
   // }
+
   const isStepCompleted = (status, order) => {
     if (
       order?.status.map((_) => _.state).includes("Failed") &&
@@ -83,6 +79,7 @@ const Order = ({ order, orderId }) => {
     }
     return true;
   };
+
   // write custom react hook to fetch data
   return (
     <React.Fragment>
@@ -117,7 +114,7 @@ const Order = ({ order, orderId }) => {
                     Payment Method
                   </dt>
                   <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                  {paymentMethod}
+                    {paymentMethod}
                   </dd>
                 </div>
                 <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -265,9 +262,37 @@ const Order = ({ order, orderId }) => {
               </div>
             </div>
           </div>
+          <OrderItems orderItems={order.orderItems} />
         </div>
       </section>{" "}
     </React.Fragment>
+  );
+};
+const OrderItems = ({ orderItems }) => {
+  console.log(orderItems, 3.2);
+  return (
+    <div className="mt-6 border-t border-gray-200 overflow-y-auto">
+      <h3 className="text-lg font-medium text-gray-900">Ordered Items</h3>
+      <div className="mt-4 space-y-4">
+        {[...orderItems].map((item, index) => (
+          <div key={index} className="flex space-x-4 items-center">
+            <div className="flex-shrink-0">
+              <img
+                className="h-10 w-10 object-cover rounded"
+                src={item.image} // Provide the actual URL of the image
+                alt={item.name}
+              />
+            </div>
+            <div className="flex-grow">
+              <p className="text-sm font-medium text-gray-900">{item.name}</p>
+              <p className="text-sm text-gray-500">
+                Qty: {item.quantity} x Rs: {item.price}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 };
 

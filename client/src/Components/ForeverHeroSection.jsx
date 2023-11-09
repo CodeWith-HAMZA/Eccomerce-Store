@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Typewriter from "typewriter-effect";
 const ForeverHeroSection = () => {
   const bannerImages = [
@@ -38,12 +39,12 @@ const ForeverHeroSection = () => {
             </p>
 
             <div class="mt-8 flex flex-wrap gap-4 text-center">
-              <a
-                href="#"
+              <Link
+                to="/products/All Products"
                 class="block w-full rounded bg-yellow-600 px-12 py-3 text-sm font-medium text-white shadow hover:bg-yellow-500 hover:shadow-md transition-all focus:outline-none focus:ring active:bg-yellow-500 sm:w-auto"
               >
                 Get Started
-              </a>
+              </Link>
 
               <a
                 href="#"

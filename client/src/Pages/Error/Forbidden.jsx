@@ -1,9 +1,9 @@
-import React from "react";
-import ErrorPage from "./ErrorPage";
+import React from "react"; 
+import ErrorPageLayout from "./ErrorPageLayout";
 
 const Forbidden = ({}) => {
   return (
-    <ErrorPage>
+    <ErrorPageLayout>
       <h1 class="mt-5 text-[36px] font-bold text-slate-800 lg:text-[50px]">
        (403) Access Denied: This is Not the Page You're Looking For
       </h1>
@@ -12,8 +12,9 @@ const Forbidden = ({}) => {
         access this page. Have you tried using a Jedi mind trick? It might work
         better than hacking.
       </p>
-    </ErrorPage>
+    </ErrorPageLayout>
   );
 };
 
 export default Forbidden;
+``

@@ -7,7 +7,8 @@ import Context from "../Context/Context";
 import { collectionGroup } from "firebase/firestore";
 import { getMultipleDocs } from "../firebase/firebaseMethods";
 import FilteredProducts from "../Components/FilteredProducts";
-import Productss from "./Productss";
+
+import ProductsGrid from "./ProductsGrid";
 const Products = () => {
   let { productType } = useParams();
 
@@ -29,22 +30,30 @@ const Products = () => {
       setProgress(100);
     })();
   }, [productType]);
-  React.useEffect(() => {
-    scrollTo(0, 0);
-  }, []);
-  return (
-    <>
-      {/* <FilteredProducts products={Products} productType={productType} /> */}
-      <Productss products = {Products} productType={productType} />
-    
 
-    </>
+  return Products.length ? (
+    <ProductsGrid products={Products} productType={productType}></ProductsGrid>
+  ) : (
+    <ProductsNotAvailable></ProductsNotAvailable>
   );
 };
+function ProductsNotAvailable() {
+  return (
+    <div class="flex flex-col items-center justify-center h-screen">
+      <h2 class="text-3xl font-semibold mb-4">Products Not Available</h2>
+      <p class="text-gray-600 mb-8">
+        We're sorry, but there are no products available at the moment.
+      </p>
+      <Link to="/" class="text-yellow-500 hover:underline">
+        Go back to homepage
+      </Link>
+    </div>
+  );
+}
 
 export default Products;
 
-//  old product card 
+//  old product card
 // {/* <div
 // class="el-wrapper w-[17rem] lg:w-[16.6rem]"
 // >
@@ -128,4 +137,3 @@ export default Products;
 //   </button>
 // </div>
 // </div> */}
-

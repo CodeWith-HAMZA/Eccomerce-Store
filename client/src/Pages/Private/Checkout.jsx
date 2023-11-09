@@ -152,18 +152,17 @@ const Checkout = () => {
 
                               <dl class="mt-0.5 space-y-px text-[10px] text-gray-600">
                                 <div>
-                                  <dt class="inline">Quantity:</dt>
+                                  <dt class="inline">Quantity: </dt>
                                   <dd class="inline">{quantity}</dd>
                                 </div>
                                 <div>
-                                  <dt class="inline">Size:</dt>
+                                  {/* <dt class="inline">Size:</dt>
                                   <dd class="inline">{size}</dd>
-                                  {", "}
                                   <dt class="inline">Color:</dt>
-                                  <dd class="inline">{color}</dd>
+                                  <dd class="inline">{color}</dd> */}
                                 </div>
                                 <div>
-                                  <dt class="inline">Price:</dt>
+                                  <dt class="inline">Price: </dt>
                                   <dd class="inline">{price} Rs</dd>
                                 </div>
                               </dl>
